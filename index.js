@@ -42,14 +42,16 @@ const formatStringForUID = content =>
         .replace(/^-|-$/g, '');
 
 /**
- * Dox parser for doxdox.
- *
- * @example parser(content, 'index.js').then(methods => console.log(methods));
- * @param {String} content Contents of file.
- * @param {String} filename Name of file. Used to generate UIDs.
- * @return {Promise} Promise with methods parsed from contents.
- * @public
- */
+     * Dox parser for doxdox.
+	 * @summary this is the function description
+	 * @interface http://apiprofiling.relario.com/v1/topup
+     * @param {string} event The first color, in hexadecimal format.
+     * @param {string} context The second color, in hexadecimal format.
+	 * @param {string} callback The third color, in hexadecimal format.
+	 * @property {string} key Description of key value.
+	 * @yields arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-630
+     * @return {Error} 402 | bad request.
+*/
 
 const parser = (content, filename) =>
     dox.parseComments(content, {
@@ -80,7 +82,11 @@ const parser = (content, filename) =>
                 .replace(/\], \[/g, ', ')
                 .replace(', [', '[, '),
             'tags': {
-                'example': method.tags.filter(tag => tag.type === 'example')
+				'summary': method.tags.filter(tag => tag.type === 'summary')
+                    .map(tag => tag.string),
+				'interface': method.tags.filter(tag => tag.type === 'interface')
+                    .map(tag => tag.string),
+				'example': method.tags.filter(tag => tag.type === 'example')
                     .map(tag => tag.string),
                 'param': method.tags.filter(tag => tag.type === 'param')
                     .map(tag => ({
@@ -89,7 +95,9 @@ const parser = (content, filename) =>
                         'types': tag.types,
                         'description': tag.description
                     })),
-                'property': method.tags.filter(tag => tag.type === 'property')
+                'yields': method.tags.filter(tag => tag.type === 'yields')
+                    .map(tag => tag.string),
+				'property': method.tags.filter(tag => tag.type === 'property')
                     .map(tag => ({
                         'name': tag.name,
                         'types': tag.types,
