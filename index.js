@@ -84,6 +84,10 @@ const parser = (content, filename) =>
             'tags': {
 				'summary': method.tags.filter(tag => tag.type === 'summary')
                     .map(tag => tag.string),
+				'todo': method.tags.filter(tag => tag.type === 'todo')
+                    .map(tag => tag.string),
+				'listens': method.tags.filter(tag => tag.type === 'listens')
+                    .map(tag => tag.string),
 				'interface': method.tags.filter(tag => tag.type === 'interface')
                     .map(tag => tag.string),
 				'example': method.tags.filter(tag => tag.type === 'example')
@@ -108,7 +112,9 @@ const parser = (content, filename) =>
                     .map(tag => ({
                         'types': tag.types,
                         'description': tag.description
-                    }))
+                    })),
+				'license': method.tags.filter(tag => tag.type === 'license')
+                    .map(tag => tag.string)
             }
         }))
         .filter(method => !method.empty);
