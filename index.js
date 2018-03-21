@@ -51,6 +51,7 @@ const formatStringForUID = content =>
 	 * @property {string} key Description of key value.
 	 * @yields arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-630
      * @return {Error} 402 | bad request.
+	 *	https://stackoverflow.com/questions/40263846/create-custom-tags-with-jsdoc
 */
 
 const parser = (content, filename) =>
@@ -90,8 +91,6 @@ const parser = (content, filename) =>
                     .map(tag => tag.string),
 				'interface': method.tags.filter(tag => tag.type === 'interface')
                     .map(tag => tag.string),
-				'example': method.tags.filter(tag => tag.type === 'example')
-                    .map(tag => tag.string),
                 'param': method.tags.filter(tag => tag.type === 'param')
                     .map(tag => ({
                         'name': formatStringForParam(tag.name),
@@ -99,7 +98,7 @@ const parser = (content, filename) =>
                         'types': tag.types,
                         'description': tag.description
                     })),
-                'yields': method.tags.filter(tag => tag.type === 'yields')
+                'topic': method.tags.filter(tag => tag.type === 'topic')
                     .map(tag => tag.string),
 				'property': method.tags.filter(tag => tag.type === 'property')
                     .map(tag => ({
