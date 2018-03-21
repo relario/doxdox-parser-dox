@@ -49,9 +49,8 @@ const formatStringForUID = content =>
      * @param {string} context The second color, in hexadecimal format.
 	 * @param {string} callback The third color, in hexadecimal format.
 	 * @property {string} key Description of key value.
-	 * @yields arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-630
+	 * @topic arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-630
      * @return {Error} 402 | bad request.
-	 *	https://stackoverflow.com/questions/40263846/create-custom-tags-with-jsdoc
 */
 
 const parser = (content, filename) =>
@@ -85,7 +84,7 @@ const parser = (content, filename) =>
             'tags': {
 				'summary': method.tags.filter(tag => tag.type === 'summary')
                     .map(tag => tag.string),
-				'todo': method.tags.filter(tag => tag.type === 'todo')
+				'sourcecode': method.tags.filter(tag => tag.type === 'sourcecode')
                     .map(tag => tag.string),
 				'listens': method.tags.filter(tag => tag.type === 'listens')
                     .map(tag => tag.string),
