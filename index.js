@@ -44,14 +44,18 @@ const formatStringForUID = content =>
 /**
      * Dox parser for doxdox.
 	 * @summary this is the function description
-	 * @interface http://apiprofiling.relario.com/v1/topup
+	 * @sourcecode https://github.com/relario/hypercentage-wp-noc/blob/master/postAffiliatePro/t-hypercentage-postaffiliatepro/handler.js#L221
+	 * @invocation arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-800Answer
+	 * @apigateway http://apiprofiling.relario.com/v1/topup
      * @param {string} event The first color, in hexadecimal format.
      * @param {string} context The second color, in hexadecimal format.
 	 * @param {string} callback The third color, in hexadecimal format.
-	 * @property {string} key Description of key value.
 	 * @topic arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-630
+	 * @property {string} key Description of key value for SNS message.
      * @return {Error} 402 | bad request.
-*/
+	 * @snippet code snippets go here.
+	 * more code snippet here.
+     */
 
 const parser = (content, filename) =>
     dox.parseComments(content, {
@@ -86,9 +90,9 @@ const parser = (content, filename) =>
                     .map(tag => tag.string),
 				'sourcecode': method.tags.filter(tag => tag.type === 'sourcecode')
                     .map(tag => tag.string),
-				'listens': method.tags.filter(tag => tag.type === 'listens')
+				'invocation': method.tags.filter(tag => tag.type === 'invocation')
                     .map(tag => tag.string),
-				'interface': method.tags.filter(tag => tag.type === 'interface')
+				'apigateway': method.tags.filter(tag => tag.type === 'apigateway')
                     .map(tag => tag.string),
                 'param': method.tags.filter(tag => tag.type === 'param')
                     .map(tag => ({
@@ -101,7 +105,7 @@ const parser = (content, filename) =>
                     .map(tag => tag.string),
 				'property': method.tags.filter(tag => tag.type === 'property')
                     .map(tag => ({
-                        'name': tag.name,
+                        'name': formatStringForParam(tag.name),
                         'types': tag.types,
                         'description': tag.description
                     })),
@@ -111,7 +115,7 @@ const parser = (content, filename) =>
                         'types': tag.types,
                         'description': tag.description
                     })),
-				'license': method.tags.filter(tag => tag.type === 'license')
+				'snippet': method.tags.filter(tag => tag.type === 'snippet')
                     .map(tag => tag.string)
             }
         }))
