@@ -109,6 +109,14 @@ const parser = (content, filename) =>
                         'types': tag.types,
                         'description': tag.description
                     })),
+				's3url': method.tags.filter(tag => tag.type === 's3url')
+                    .map(tag => tag.string),
+				'gdrive': method.tags.filter(tag => tag.type === 'gdrive')
+                    .map(tag => tag.string),
+				'gsheet': method.tags.filter(tag => tag.type === 'gsheet')
+                    .map(tag => tag.string),
+				'sqs': method.tags.filter(tag => tag.type === 'sqs')
+                    .map(tag => tag.string),
                 'return': method.tags.filter(tag =>
                     tag.type === 'return' || tag.type === 'returns')
                     .map(tag => ({
