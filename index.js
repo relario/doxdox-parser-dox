@@ -89,11 +89,20 @@ const parser = (content, filename) =>
 				'summary': method.tags.filter(tag => tag.type === 'summary')
                     .map(tag => tag.string),
 				'sourcecode': method.tags.filter(tag => tag.type === 'sourcecode')
-                    .map(tag => tag.string),
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
 				'invocation': method.tags.filter(tag => tag.type === 'invocation')
-                    .map(tag => tag.string),
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
 				'apigateway': method.tags.filter(tag => tag.type === 'apigateway')
-                    .map(tag => tag.string),
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
                 'param': method.tags.filter(tag => tag.type === 'param')
                     .map(tag => ({
                         'name': formatStringForParam(tag.name),
@@ -101,21 +110,38 @@ const parser = (content, filename) =>
                         'types': tag.types,
                         'description': tag.description
                     })),
-                'topic': method.tags.filter(tag => tag.type === 'topic')
-                    .map(tag => tag.string),
+                'snstopic': method.tags.filter(tag => tag.type === 'snstopic')
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
 				'property': method.tags.filter(tag => tag.type === 'property')
                     .map(tag => ({
                         'name': formatStringForParam(tag.name),
                         'types': tag.types,
                         'description': tag.description
                     })),
-				's3url': method.tags.filter(tag => tag.type === 's3url')
-                    .map(tag => tag.string),
+				's3objectpath': method.tags.filter(tag => tag.type === 's3objectpath')
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
 				'gdrive': method.tags.filter(tag => tag.type === 'gdrive')
-                    .map(tag => tag.string),
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
 				'gsheet': method.tags.filter(tag => tag.type === 'gsheet')
-                    .map(tag => tag.string),
-				'sqs': method.tags.filter(tag => tag.type === 'sqs')
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
+				'sqsque': method.tags.filter(tag => tag.type === 'sqsque')
+                    .map(tag => ({
+                        'name': tag.name,
+                        'description': tag.description
+                    })),
+				'snspath': method.tags.filter(tag => tag.type === 'snspath')
                     .map(tag => tag.string),
                 'return': method.tags.filter(tag =>
                     tag.type === 'return' || tag.type === 'returns')
