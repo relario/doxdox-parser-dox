@@ -42,20 +42,8 @@ const formatStringForUID = content =>
         .replace(/^-|-$/g, '');
 
 /**
-     * Dox parser for doxdox.
-	 * @summary this is the function description
-	 * @sourcecode https://github.com/relario/hypercentage-wp-noc/blob/master/postAffiliatePro/t-hypercentage-postaffiliatepro/handler.js#L221
-	 * @invocation arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-800Answer
-	 * @apigateway http://apiprofiling.relario.com/v1/topup
-     * @param {string} event The first color, in hexadecimal format.
-     * @param {string} context The second color, in hexadecimal format.
-	 * @param {string} callback The third color, in hexadecimal format.
-	 * @topic arn:aws:sns:eu-west-1:622060920639:t-relario-pandora-core-630
-	 * @property {string} key Description of key value for SNS message.
-     * @return {Error} 402 | bad request.
-	 * @snippet code snippets go here.
-	 * more code snippet here.
-     */
+* Custom parser for doxdox based on slate tag template.
+*/
 
 const parser = (content, filename) =>
     dox.parseComments(content, {
@@ -98,11 +86,6 @@ const parser = (content, filename) =>
                         'name': tag.name,
                         'description': tag.description
                     })),
-				'apigateway': method.tags.filter(tag => tag.type === 'apigateway')
-                    .map(tag => ({
-                        'name': tag.name,
-                        'description': tag.description
-                    })),
                 'param': method.tags.filter(tag => tag.type === 'param')
                     .map(tag => ({
                         'name': formatStringForParam(tag.name),
@@ -110,7 +93,7 @@ const parser = (content, filename) =>
                         'types': tag.types,
                         'description': tag.description
                     })),
-                'snstopic': method.tags.filter(tag => tag.type === 'snstopic')
+                'snsoutput': method.tags.filter(tag => tag.type === 'snsoutput')
                     .map(tag => ({
                         'name': tag.name,
                         'description': tag.description
@@ -136,13 +119,11 @@ const parser = (content, filename) =>
                         'name': tag.name,
                         'description': tag.description
                     })),
-				'sqsque': method.tags.filter(tag => tag.type === 'sqsque')
+				'sqsqueue': method.tags.filter(tag => tag.type === 'sqsqueue')
                     .map(tag => ({
                         'name': tag.name,
                         'description': tag.description
                     })),
-				'snspath': method.tags.filter(tag => tag.type === 'snspath')
-                    .map(tag => tag.string),
                 'return': method.tags.filter(tag =>
                     tag.type === 'return' || tag.type === 'returns')
                     .map(tag => ({
